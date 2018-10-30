@@ -8,38 +8,37 @@
 #pragma resource "*.dfm"
 TForm1 *Form1;
 
-class Node                              // îïðåäåíèå óçëà
+class Node                              // опредение узла
    {     public:
-          int value                     ;//çíà÷åíèå óçëà
-         Node *next                     ;//àäðåñ ñëåä.óçëà
+          int value                     ;//значение узла
+         Node *next                     ;//адрес след.узла
 
         Node(int valueNode)
         {  value = valueNode            ;
            next = NULL                  ;  }
    };
 
-class LinkedList                        //çàäà¸ò ñâÿçàííûé ñïèñîê óçëîâ
+class LinkedList                        //задаёт связанный список узлов
 {       public:
-          Node *head                    ;//óêàçàòåëü íà óçåë-ãîëîâó ñïèñêà
-          Node *tail                    ;//ýòî óêàçàòåëü íà çàâåðøàþùèé óçåë
+          Node *head                    ;//указатель на узел-голову списка
+          Node *tail                    ;//это указатель на завершающий узел
 
         LinkedList()
         {  head = NULL                  ;
            tail = NULL                  ; }
 
-    //------------------------------ ÄÎÁÀÂÈÒÜ ÝËÅÌÅÍÒ Â ÊÎÍÅÖ
+    //------------------------------ ДОБАВИТЬ ЭЛЕМЕНТ В КОНЕЦ
     void add_in_tail(Node *item)
-    {    if (head == NULL) head = item  ;// çàïèñü àäðåñà ïåðâîãî ýëåìåíòà â ñïèñêå
-         else tail->next = item         ;// tail õðàíèò àäðåñ ïðåäûäóùåãî ÷ëåíà ñïèñêà,
-                                         // ìåíÿåì åãî íà ññûëêó ê ïðèáàâëÿåìîìó óçëó
-         tail = item                    ;// çàïèñü àäðåñà ïîñëåäíåãî ýëåìåíòà â ëèñò
-         tail->next = null               ;
-    }
-    //------------------------------ ÏÅ×ÀÒÜ ÑÏÈÑÊÀ
+    {    if (head == NULL) head = item  ;// запись адреса первого элемента в списке
+         else tail->next = item         ;// tail хранит адрес предыдущего члена списка,
+                                         // меняем его на ссылку к прибавляемому узлу
+         tail = item                    ;// запись адреса последнего элемента в лист
+         tail -> next = NULL;           ;}
+    //------------------------------ ПЕЧАТЬ СПИСКА
     void print()
     {
         Node *node = head                                        ;
-        AnsiString tmp = ""                                      ;//îáíóëÿåì ñîäåðæèìîå
+        AnsiString tmp = ""                                      ;//обнуляем содержимое
         Form1->Memo->Lines->Strings[0] = tmp                     ;
         int nextA                                                ;
         int nodeA                                                ;
@@ -52,24 +51,24 @@ class LinkedList                        //çàäà¸ò ñâÿçàííûé ñïè
           node = node->next                                      ;
         }
     }
-    //----------------------------- ÓÄÀËÅÍÈÅ ÈÇ ÑÏÈÑÊÀ ÏÎ ÇÍÀ×ÅÍÈÞ
-    void del_val(int val)
+    //----------------------------- УДАЛЕНИЕ ИЗ СПИСКА ПО ЗНАЧЕНИЮ
+    void del_val(int val, AnsiString flag)          // all || one
      {   Node *node = head                                      ;
          Node *prevnode = head                                  ;
-        while (node != NULL)
-        {   if (node->value == val)
+         while (node != NULL)
+         {   if (node->value == val)
             {   prevnode->next = node->next;
                 if (node == head) head = node->next             ;
                 if (node == tail) tail = prevnode               ;
               //  delete node                                   ;
-                return                                          ;
+                if (flag == one)  return                        ;
             }
             prevnode = node                                     ;
             node = node->next                                   ;
-        }
+         }
      }
-     //---------------------------- ÓÄÀËÅÍÈÅ ÈÇ ÑÏÈÑÊÀ ÏÎ ÇÍÀ×ÅÍÈÞ
-    void del_val_all(int val)
+     //---------------------------- УДАЛЕНИЕ ИЗ СПИСКА ПО ЗНАЧЕНИЮ
+ /*   void del_val_all(int val)
     {   Node *node = head                                       ;
         Node *prevnode = head                                   ;
         while (node != NULL)
@@ -83,8 +82,9 @@ class LinkedList                        //çàäà¸ò ñâÿçàííûé ñïè
                 prevnode = node                                 ;
             node = node->next                                   ;
         }
-     }
-    //---------------------------- îñâîáîæäåíèå ïàìÿòè è ñáðîñ ñïèñêà
+     } 
+ */
+    //---------------------------- освобождение памяти и сброс списка
     void empty()
     {  Node *node = head                                        ;
        Node *prevnode = head                                    ;
@@ -96,7 +96,7 @@ class LinkedList                        //çàäà¸ò ñâÿçàííûé ñïè
          head = NULL                                            ;
          tail = NULL                                            ;
      }
-    //----------------------------- Ìàññèâ ññûëîê íàéäåííîãî çíà÷åíèÿ
+    //----------------------------- Массив ссылок найденного значения
     LinkedList* ArrayVal(int val)
     {   LinkedList *list = new LinkedList                       ;
         Node *node = head                                       ;
@@ -109,7 +109,7 @@ class LinkedList                        //çàäà¸ò ñâÿçàííûé ñïè
         }
         return(list);
     }
-    //---------------------------- ÄËÈÍÀ ÑÏÈÑÊÀ
+    //---------------------------- ДЛИНА СПИСКА
     int GetLength()
     {  Node *node = head                                        ;
         int length = 0                                          ;
@@ -120,7 +120,7 @@ class LinkedList                        //çàäà¸ò ñâÿçàííûé ñïè
         Form1->Memo->Text  = length                             ;
         return(length)                                          ;
     }
-    //---------------------------- ÂÑÒÀÂÊÀ ÓÇËÀ ÏÎÑËÅ ÓÇËÀ Ñ ÎÏÐÅÄÅËÅÍÍÛÌ ÇÍÀ×ÅÍÈÅÌ
+    //---------------------------- ВСТАВКА УЗЛА ПОСЛЕ УЗЛА С ОПРЕДЕЛЕННЫМ ЗНАЧЕНИЕМ
     void SetNode(int key_val, int seted_node_val)
     {  Node *node = head                                        ;
         while (node != NULL) 
@@ -133,7 +133,7 @@ class LinkedList                        //çàäà¸ò ñâÿçàííûé ñïè
             node = node->next                                   ;
         }
     }
-    //---------------------------- ÑÓÌÌÀÒÎÐ ËÈÑÒÎÂ
+    //---------------------------- СУММАТОР ЛИСТОВ
     LinkedList* SummLists(LinkedList* first, LinkedList* second)
     {   LinkedList* NewList = new LinkedList                    ;
         int length1 = first->GetLength()                        ;
@@ -151,14 +151,14 @@ class LinkedList                        //çàäà¸ò ñâÿçàííûé ñïè
            NewList->print()                                     ;
            return(NewList)                                      ;
         }
-        else Form1->Memo->Text  = "Íåðàâíàÿ äëèíà ñïèñêîâ"      ;
+        else Form1->Memo->Text  = "Неравная длина списков"      ;
         return(NewList)                                         ;
     }
 
-    //----------------------------- Ìàññèâ äàííûõ ñïèñêà(äëÿ òåñòà)
+    //----------------------------- Массив данных списка(для теста)
     int** Array(LinkedList* list)
     {   int i = 0                                               ;
-        int Arraylength = list->GetLength()                     ;//ðàñ÷åò ñòðîê ìàññèâà
+        int Arraylength = list->GetLength()                     ;//расчет строк массива
         int *p_darr = new int[Arraylength]                      ;
         int **DataArray                                         ;
         DataArray = new int*[Arraylength]                       ;
@@ -168,25 +168,26 @@ class LinkedList                        //çàäà¸ò ñâÿçàííûé ñïè
 
         Node *node = list->head                                 ;
         while (node != NULL)
-        {   DataArray[i][0] =  node->value                      ;//âåëè÷èíà
-            DataArray[i][1] = (int) node                        ;//àäðåñ ýëåìåíòà
-            DataArray[i][2] = (int) node->next                  ;//àäðåñ ñëåä.ýëåì.
+        {   DataArray[i][0] =  node->value                      ;//величина
+            DataArray[i][1] = (int) node                        ;//адрес элемента
+            DataArray[i][2] = (int) node->next                  ;//адрес след.элем.
             i++;
             node = node->next                                   ;
         }
         return(DataArray)                                       ;
     }
-    //---------------------------- Ñðàâíåíèå ìàññèâîâ(äëÿ òåñòà)
+    //---------------------------- Сравнение массивов(для теста)
     int compare_arrays(int** mass1, int** mass2)                      
     {   int exit                                                      ;
         for (int i = 0; i<100; i++)
-        {   if (mass1[i][0] != mass2[i][0])                return(1)  ;//âåëè÷èíà
-            if (mass1[i][2] == 0 && mass2[i][2] == 0)      return(0)  ;//àäðåñ
+        {   if (mass1[i][0] != mass2[i][0])                return(1)  ;//величина
+            if (mass1[i][2] == 0 && mass2[i][2] == 0)      return(0)  ;//адрес
             else if (mass1[i][2] == 0 || mass2[i][2] == 0) return(1)  ;
         }
         return(1)                                                      ;
     }
-    //----------------------------- ÑÎÇÄÀÒÜ ËÈÑÒ (ïåðåãðóç ôóíêöèè)(äëÿ òåñòà)
+
+    //----------------------------- СОЗДАТЬ ЛИСТ (перегруз функции)(для теста)
     void CreateList(int a1)
     {   empty();
         add_in_tail(new Node(a1))                               ;
@@ -212,7 +213,7 @@ class LinkedList                        //çàäà¸ò ñâÿçàííûé ñïè
         add_in_tail(new Node(a3))                               ;
         add_in_tail(new Node(a4))                               ;
     }
-    //------------------------ Test --------------------------------
+    //------------------------ ТЕСТ --------------------------------
     void Test ()
     {   int i = 0                                               ;
         LinkedList* test_list1 = new LinkedList                 ;
@@ -221,9 +222,9 @@ class LinkedList                        //çàäà¸ò ñâÿçàííûé ñïè
         int** Array2                                            ;
 
         // del_val(int val)--------------------------------------
-        test_list1 -> CreateList(1, 2, 3)                       ;//ëèñò ïåðåä ïðèìåíåíèåì ôóíêöèè
-        test_list2 -> CreateList(2, 3)                          ;//êàêèì äîëæåí áûòü ðåçóëüòàò ïîñëå
-        i += TestSolve (test_list1, test_list2, 0, 1)           ;//ëèñò1,ëèñò2,ôóíêöèÿ,val ôóíêöèè
+        test_list1 -> CreateList(1, 2, 3)                       ;//лист перед применением функции
+        test_list2 -> CreateList(2, 3)                          ;//каким должен быть результат после
+        i += TestSolve (test_list1, test_list2, 0, 1)           ;//лист1,лист2,функция,val функции
 
         test_list1 -> CreateList(1, 2, 3)                       ;
         test_list2 -> CreateList(1, 3)                          ;
@@ -236,15 +237,15 @@ class LinkedList                        //çàäà¸ò ñâÿçàííûé ñïè
         // del_val_all(int val)----------------------------------
         test_list1 -> CreateList(1, 1, 3)                       ;
         test_list2 -> CreateList(3)                             ;
-        i += TestSolve (test_list1, test_list2, 1, 1)           ;
+        i += TestSolve (test_list1, test_list2, 0, 1)           ;
 
         test_list1 -> CreateList(1, 3, 3)                       ;
         test_list2 -> CreateList(1)                             ;
-        i += TestSolve (test_list1, test_list2, 1, 3)           ;
+        i += TestSolve (test_list1, test_list2, 0, 3)           ;
 
         test_list1 -> CreateList(2, 1, 2, 1)                    ;
         test_list2 -> CreateList(1, 1)                          ;
-        i += TestSolve (test_list1, test_list2, 1, 2)           ;
+        i += TestSolve (test_list1, test_list2, 0, 2)           ;
 
         // empty-------------------------------------------------
         test_list1 -> CreateList(1, 2, 3, 4)                    ;
@@ -298,16 +299,16 @@ class LinkedList                        //çàäà¸ò ñâÿçàííûé ñïè
         test_list1 -> CreateList(4, 2, 5, 1)                          ;
         test_list2 -> CreateList(4, 6)                                ;
         SummLists(test_list1 , test_list2)                            ;
-        if (Form1->Memo->Text  != "Íåðàâíàÿ äëèíà ñïèñêîâ") i++       ;
+        if (Form1->Memo->Text  != "Неравная длина списков") i++       ;
 
-        if (i !=0 ) Form1->Memo->Text  = "Òåñò íå ïðîéäåí"            ;
-        else        Form1->Memo->Text  = "Òåñò çàâåðøåí óñïåøíî"      ;
+        if (i !=0 ) Form1->Memo->Text  = "Тест не пройден"            ;
+        else        Form1->Memo->Text  = "Тест завершен успешно"      ;
 
         delete test_list1;
         delete test_list2;
     }
 
-   //------------ ÒÅÑÒ (ñðàâíåíèå ðåçóëüòàòà è îòâåòà) ----------
+   //------------ ТЕСТ (сравнение результата и ответа) ----------
    int TestSolve (LinkedList* test_list1, LinkedList* test_list2,int fNumFunc, int val)
     {
         int i = 0                                       ;
@@ -323,10 +324,10 @@ class LinkedList                        //çàäà¸ò ñâÿçàííûé ñïè
                 { &LinkedList::del_val                  ,  //0
                   &LinkedList::del_val_all  }           ;  //1
 
-        (test_list1->*ListTableFunc[fNumFunc])(val)     ;//ïðîâåðÿåìàÿ ôóíêöèÿ
-        Array1 = Array(test_list1)                      ;//îïðåäåëåíèå ïåðâîãî ìàññèâà
-        Array2 = Array(test_list2)                      ;//âòîðîé ìàññèâ
-        i = compare_arrays(Array1,Array2)               ;//ñðàâíåíèå è ðåçóëüòàò
+        (test_list1->*ListTableFunc[fNumFunc])(val)     ;//проверяемая функция
+        Array1 = Array(test_list1)                      ;//определение первого массива
+        Array2 = Array(test_list2)                      ;//второй массив
+        i = compare_arrays(Array1,Array2)               ;//сравнение и результат
         return(i)                                       ;
     }
 
@@ -345,9 +346,18 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 //===========================================================================
 
 void __fastcall TForm1::BtnRunClick(TObject *Sender)
-{        //-- creation of standart list --   
-        test_list1 -> CreateList(16, 32, 128, 256);
-        Form1->Memo->Text  = "List created";
+{
+        //-- СБРОС СПИСКА ДО НОМИНАЛЬНЫХ ЗНАЧЕНИЙ --
+        Node *n1 = new Node(12)                 ;
+        Node *n2 = new Node(44)                 ;
+        n1->next = &(*n2)                       ;
+
+        list->empty()                           ;
+        list->add_in_tail(n1)                   ;
+        list->add_in_tail(n2)                   ;
+        list->add_in_tail(new Node(128))        ;
+        list->add_in_tail(new Node(55))         ;
+        Form1->Memo->Text  = "Список создан"    ;
 }
 //---------------------------------------------------------------------------
 
