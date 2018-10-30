@@ -8,32 +8,33 @@
 #pragma resource "*.dfm"
 TForm1 *Form1;
 
-class Node                              // опредение узла
+class Node                                                      // опредение узла
    {     public:
-          int value                     ;//значение узла
-         Node *next                     ;//адрес след.узла
+          int value                                             ;//значение узла
+         Node *next                                             ;//адрес след.узла
 
         Node(int valueNode)
-        {  value = valueNode            ;
-           next = NULL                  ;  }
+        {  value = valueNode                                    ;
+           next = NULL                                          ;  }
    };
 
-class LinkedList                        //задаёт связанный список узлов
+class LinkedList                                                 //задаёт связанный список узлов
 {       public:
-          Node *head                    ;//указатель на узел-голову списка
-          Node *tail                    ;//это указатель на завершающий узел
+          Node *head                                            ;//указатель на узел-голову списка
+          Node *tail                                            ;//это указатель на завершающий узел
 
         LinkedList()
-        {  head = NULL                  ;
-           tail = NULL                  ; }
+        {  head = NULL                                          ;
+           tail = NULL                                          ; }
 
     //------------------------------ ДОБАВИТЬ ЭЛЕМЕНТ В КОНЕЦ
     void add_in_tail(Node *item)
-    {    if (head == NULL) head = item  ;// запись адреса первого элемента в списке
-         else tail->next = item         ;// tail хранит адрес предыдущего члена списка,
-                                         // меняем его на ссылку к прибавляемому узлу
-         tail = item                    ;// запись адреса последнего элемента в лист
-         tail -> next = NULL;           ;}
+    {    if (head == NULL) head = item                          ;// запись адреса первого элемента в списке
+         else tail->next = item                                 ;// tail хранит адрес предыдущего члена списка,
+                                                                 // меняем его на ссылку к прибавляемому узлу
+         tail = item                                            ;// запись адреса последнего элемента в лист
+         tail->next = NULL                                      ;
+    }
     //------------------------------ ПЕЧАТЬ СПИСКА
     void print()
     {
@@ -61,14 +62,14 @@ class LinkedList                        //задаёт связанный спи
                 if (node == head) head = node->next             ;
                 if (node == tail) tail = prevnode               ;
               //  delete node                                   ;
-                if (flag == one)  return                        ;
+                if (flag != 'all')  return                       ;
             }
             prevnode = node                                     ;
             node = node->next                                   ;
          }
-     }
-     //---------------------------- УДАЛЕНИЕ ИЗ СПИСКА ПО ЗНАЧЕНИЮ
- /*   void del_val_all(int val)
+}
+/*     //---------------------------- УДАЛЕНИЕ ИЗ СПИСКА ПО ЗНАЧЕНИЮ
+    void del_val_all(int val)
     {   Node *node = head                                       ;
         Node *prevnode = head                                   ;
         while (node != NULL)
@@ -82,8 +83,8 @@ class LinkedList                        //задаёт связанный спи
                 prevnode = node                                 ;
             node = node->next                                   ;
         }
-     } 
- */
+     }
+*/
     //---------------------------- освобождение памяти и сброс списка
     void empty()
     {  Node *node = head                                        ;
@@ -224,28 +225,28 @@ class LinkedList                        //задаёт связанный спи
         // del_val(int val)--------------------------------------
         test_list1 -> CreateList(1, 2, 3)                       ;//лист перед применением функции
         test_list2 -> CreateList(2, 3)                          ;//каким должен быть результат после
-        i += TestSolve (test_list1, test_list2, 0, 1)           ;//лист1,лист2,функция,val функции
+        test_list1 -> del_val(1,'one')                          ;
 
         test_list1 -> CreateList(1, 2, 3)                       ;
         test_list2 -> CreateList(1, 3)                          ;
-        i += TestSolve (test_list1, test_list2, 0, 2)           ;
+        test_list1 -> del_val(2,'one')                          ;
 
         test_list1 -> CreateList(1, 2, 3)                       ;
         test_list2 -> CreateList(1, 2)                          ;
-        i += TestSolve (test_list1, test_list2, 0, 3)           ;
+        test_list1 -> del_val(3,'one')                          ;
 
         // del_val_all(int val)----------------------------------
         test_list1 -> CreateList(1, 1, 3)                       ;
         test_list2 -> CreateList(3)                             ;
-        i += TestSolve (test_list1, test_list2, 0, 1)           ;
+        test_list1 -> del_val(1,'all')                          ;
 
         test_list1 -> CreateList(1, 3, 3)                       ;
         test_list2 -> CreateList(1)                             ;
-        i += TestSolve (test_list1, test_list2, 0, 3)           ;
+        test_list1 -> del_val(3,'all')                          ;
 
         test_list1 -> CreateList(2, 1, 2, 1)                    ;
         test_list2 -> CreateList(1, 1)                          ;
-        i += TestSolve (test_list1, test_list2, 0, 2)           ;
+        test_list1 -> del_val(2,'all')                          ;
 
         // empty-------------------------------------------------
         test_list1 -> CreateList(1, 2, 3, 4)                    ;
@@ -258,17 +259,17 @@ class LinkedList                        //задаёт связанный спи
         test_list1 -> CreateList(2, 1, 3, 1)                    ;
         test_list1 = test_list1->ArrayVal(1)                    ;
         test_list2 -> CreateList(1, 1)                          ;
-        i += TestSolve (test_list1, test_list2, 0, 9)           ;
+        i += TestSolve (test_list1, test_list2)                 ;
 
         test_list1 -> CreateList(4, 2, 3, 4)                    ;
         test_list1 = test_list1->ArrayVal(4)                    ;
         test_list2 -> CreateList(4, 4)                          ;
-        i += TestSolve (test_list1, test_list2, 0, 9)           ;
+        i += TestSolve (test_list1, test_list2)                 ;
 
         test_list1 -> CreateList(4, 2, 3, 4)                    ;
         test_list1 = test_list1->ArrayVal(4)                    ;
         test_list2 -> CreateList(4, 4)                          ;
-        i += TestSolve (test_list1, test_list2, 0, 9)           ;
+        i += TestSolve (test_list1, test_list2)                 ;
 
         //  int GetLength()--------------------------------------
         test_list1 -> CreateList(4, 2, 3, 4)                    ;
@@ -280,12 +281,12 @@ class LinkedList                        //задаёт связанный спи
 
         // void SetNode(int key_val, int seted_node_val)---------
         test_list1 -> CreateList(4, 2)                          ;
-        test_list1->SetNode(2,5)          ;
+        test_list1->SetNode(2,5)                                ;
         test_list2 -> CreateList(4, 2, 5)                       ;
-        i += TestSolve (test_list1, test_list2, 0, 9)           ;
+        i += TestSolve (test_list1, test_list2)                 ;
         test_list1->SetNode(4,2)                                ;
         test_list2 -> CreateList(4, 2, 2, 5)                    ;
-        i += TestSolve (test_list1, test_list2, 0, 9)           ;
+        i += TestSolve (test_list1, test_list2)                 ;
 
 
 
@@ -294,7 +295,7 @@ class LinkedList                        //задаёт связанный спи
         test_list2 -> CreateList(4, 6, 3, 7)                          ;
         test_list1 = SummLists(test_list1 , test_list2)               ;
         test_list2 -> CreateList(8, 8, 8, 8)                          ;
-        i += TestSolve (test_list1, test_list2, 0, 9)                 ;
+        i += TestSolve (test_list1, test_list2)                       ;
 
         test_list1 -> CreateList(4, 2, 5, 1)                          ;
         test_list2 -> CreateList(4, 6)                                ;
@@ -309,31 +310,19 @@ class LinkedList                        //задаёт связанный спи
     }
 
    //------------ ТЕСТ (сравнение результата и ответа) ----------
-   int TestSolve (LinkedList* test_list1, LinkedList* test_list2,int fNumFunc, int val)
+   int TestSolve (LinkedList* test_list1, LinkedList* test_list2)
     {
         int i = 0                                       ;
         int** Array1                                    ;
         int** Array2                                    ;
         typedef void(LinkedList:: *TestFunc)(int)       ;
-        enum ListFunc
-                { fdel_val                              ,  //0
-                  fdel_val_all                          ,  //1
-                  fLastFunc    }                        ;
 
-        TestFunc ListTableFunc [ fLastFunc ]=
-                { &LinkedList::del_val                  ,  //0
-                  &LinkedList::del_val_all  }           ;  //1
-
-        (test_list1->*ListTableFunc[fNumFunc])(val)     ;//проверяемая функция
         Array1 = Array(test_list1)                      ;//определение первого массива
         Array2 = Array(test_list2)                      ;//второй массив
         i = compare_arrays(Array1,Array2)               ;//сравнение и результат
         return(i)                                       ;
     }
-
     //------------------------------------------------------------
-
-
 };
 LinkedList* arrayList = new LinkedList;
 LinkedList* list      = new LinkedList;
@@ -348,16 +337,8 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 void __fastcall TForm1::BtnRunClick(TObject *Sender)
 {
         //-- СБРОС СПИСКА ДО НОМИНАЛЬНЫХ ЗНАЧЕНИЙ --
-        Node *n1 = new Node(12)                 ;
-        Node *n2 = new Node(44)                 ;
-        n1->next = &(*n2)                       ;
-
-        list->empty()                           ;
-        list->add_in_tail(n1)                   ;
-        list->add_in_tail(n2)                   ;
-        list->add_in_tail(new Node(128))        ;
-        list->add_in_tail(new Node(55))         ;
-        Form1->Memo->Text  = "Список создан"    ;
+        list -> CreateList(16, 32, 128, 256);
+        Form1->Memo->Text  = "List created";
 }
 //---------------------------------------------------------------------------
 
@@ -369,7 +350,7 @@ void __fastcall TForm1::BtnPrintClick(TObject *Sender)
 
 void __fastcall TForm1::BtnDelClick(TObject *Sender)
 {
-        list->del_val_all(55);
+        list->del_val(55,'one');
 }
 //---------------------------------------------------------------------------
 
