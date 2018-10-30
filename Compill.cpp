@@ -8,37 +8,37 @@
 #pragma resource "*.dfm"
 TForm1 *Form1;
 
-class Node                              // опредение узла
+class Node                              // Г®ГЇГ°ГҐГ¤ГҐГ­ГЁГҐ ГіГ§Г«Г 
    {     public:
-          int value                     ;//значение узла
-         Node *next                     ;//адрес след.узла
+          int value                     ;//Г§Г­Г Г·ГҐГ­ГЁГҐ ГіГ§Г«Г 
+         Node *next                     ;//Г Г¤Г°ГҐГ± Г±Г«ГҐГ¤.ГіГ§Г«Г 
 
         Node(int valueNode)
         {  value = valueNode            ;
            next = NULL                  ;  }
    };
 
-class LinkedList                        //задаёт связанный список узлов
+class LinkedList                        //Г§Г Г¤Г ВёГІ Г±ГўГїГ§Г Г­Г­Г»Г© Г±ГЇГЁГ±Г®ГЄ ГіГ§Г«Г®Гў
 {       public:
-          Node *head                    ;//указатель на узел-голову списка
-          Node *tail                    ;//это указатель на завершающий узел
+          Node *head                    ;//ГіГЄГ Г§Г ГІГҐГ«Гј Г­Г  ГіГ§ГҐГ«-ГЈГ®Г«Г®ГўГі Г±ГЇГЁГ±ГЄГ 
+          Node *tail                    ;//ГЅГІГ® ГіГЄГ Г§Г ГІГҐГ«Гј Г­Г  Г§Г ГўГҐГ°ГёГ ГѕГ№ГЁГ© ГіГ§ГҐГ«
 
         LinkedList()
         {  head = NULL                  ;
            tail = NULL                  ; }
 
-    //------------------------------ ДОБАВИТЬ ЭЛЕМЕНТ В КОНЕЦ
+    //------------------------------ Г„ГЋГЃГЂГ‚Г€Г’Гњ ГќГ‹Г…ГЊГ…ГЌГ’ Г‚ ГЉГЋГЌГ…Г–
     void add_in_tail(Node *item)
-    {    if (head == NULL) head = item  ;// запись адреса первого элемента в списке
-         else tail->next = item         ;// tail хранит адрес предыдущего члена списка,
-                                         // меняем его на ссылку к прибавляемому узлу
-         tail = item                    ;// запись адреса последнего элемента в лист
+    {    if (head == NULL) head = item  ;// Г§Г ГЇГЁГ±Гј Г Г¤Г°ГҐГ±Г  ГЇГҐГ°ГўГ®ГЈГ® ГЅГ«ГҐГ¬ГҐГ­ГІГ  Гў Г±ГЇГЁГ±ГЄГҐ
+         else tail->next = item         ;// tail ГµГ°Г Г­ГЁГІ Г Г¤Г°ГҐГ± ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГҐГЈГ® Г·Г«ГҐГ­Г  Г±ГЇГЁГ±ГЄГ ,
+                                         // Г¬ГҐГ­ГїГҐГ¬ ГҐГЈГ® Г­Г  Г±Г±Г»Г«ГЄГі ГЄ ГЇГ°ГЁГЎГ ГўГ«ГїГҐГ¬Г®Г¬Гі ГіГ§Г«Гі
+         tail = item                    ;// Г§Г ГЇГЁГ±Гј Г Г¤Г°ГҐГ±Г  ГЇГ®Г±Г«ГҐГ¤Г­ГҐГЈГ® ГЅГ«ГҐГ¬ГҐГ­ГІГ  Гў Г«ГЁГ±ГІ
     }
-    //------------------------------ ПЕЧАТЬ СПИСКА
+    //------------------------------ ГЏГ…Г—ГЂГ’Гњ Г‘ГЏГ€Г‘ГЉГЂ
     void print()
     {
         Node *node = head                                        ;
-        AnsiString tmp = ""                                      ;//обнуляем содержимое
+        AnsiString tmp = ""                                      ;//Г®ГЎГ­ГіГ«ГїГҐГ¬ Г±Г®Г¤ГҐГ°Г¦ГЁГ¬Г®ГҐ
         Form1->Memo->Lines->Strings[0] = tmp                     ;
         int nextA                                                ;
         int nodeA                                                ;
@@ -51,7 +51,7 @@ class LinkedList                        //задаёт связанный список узлов
           node = node->next                                      ;
         }
     }
-    //----------------------------- УДАЛЕНИЕ ИЗ СПИСКА ПО ЗНАЧЕНИЮ
+    //----------------------------- Г“Г„ГЂГ‹Г…ГЌГ€Г… Г€Г‡ Г‘ГЏГ€Г‘ГЉГЂ ГЏГЋ Г‡ГЌГЂГ—Г…ГЌГ€Гћ
     void del_val(int val)
      {   Node *node = head                                      ;
          Node *prevnode = head                                  ;
@@ -67,7 +67,7 @@ class LinkedList                        //задаёт связанный список узлов
             node = node->next                                   ;
         }
      }
-     //---------------------------- УДАЛЕНИЕ ИЗ СПИСКА ПО ЗНАЧЕНИЮ
+     //---------------------------- Г“Г„ГЂГ‹Г…ГЌГ€Г… Г€Г‡ Г‘ГЏГ€Г‘ГЉГЂ ГЏГЋ Г‡ГЌГЂГ—Г…ГЌГ€Гћ
     void del_val_all(int val)
     {   Node *node = head                                       ;
         Node *prevnode = head                                   ;
@@ -83,7 +83,7 @@ class LinkedList                        //задаёт связанный список узлов
             node = node->next                                   ;
         }
      }
-    //---------------------------- освобождение памяти и сброс списка
+    //---------------------------- Г®Г±ГўГ®ГЎГ®Г¦Г¤ГҐГ­ГЁГҐ ГЇГ Г¬ГїГІГЁ ГЁ Г±ГЎГ°Г®Г± Г±ГЇГЁГ±ГЄГ 
     void empty()
     {  Node *node = head                                        ;
        Node *prevnode = head                                    ;
@@ -95,7 +95,7 @@ class LinkedList                        //задаёт связанный список узлов
          head = NULL                                            ;
          tail = NULL                                            ;
      }
-    //----------------------------- Массив ссылок найденного значения
+    //----------------------------- ГЊГ Г±Г±ГЁГў Г±Г±Г»Г«Г®ГЄ Г­Г Г©Г¤ГҐГ­Г­Г®ГЈГ® Г§Г­Г Г·ГҐГ­ГЁГї
     LinkedList* ArrayVal(int val)
     {   LinkedList *list = new LinkedList                       ;
         Node *node = head                                       ;
@@ -108,7 +108,7 @@ class LinkedList                        //задаёт связанный список узлов
         }
         return(list);
     }
-    //---------------------------- ДЛИНА СПИСКА
+    //---------------------------- Г„Г‹Г€ГЌГЂ Г‘ГЏГ€Г‘ГЉГЂ
     int GetLength()
     {  Node *node = head                                        ;
         int length = 0                                          ;
@@ -119,7 +119,7 @@ class LinkedList                        //задаёт связанный список узлов
         Form1->Memo->Text  = length                             ;
         return(length)                                          ;
     }
-    //---------------------------- ВСТАВКА УЗЛА ПОСЛЕ УЗЛА С ОПРЕДЕЛЕННЫМ ЗНАЧЕНИЕМ
+    //---------------------------- Г‚Г‘Г’ГЂГ‚ГЉГЂ Г“Г‡Г‹ГЂ ГЏГЋГ‘Г‹Г… Г“Г‡Г‹ГЂ Г‘ ГЋГЏГђГ…Г„Г…Г‹Г…ГЌГЌГ›ГЊ Г‡ГЌГЂГ—Г…ГЌГ€Г…ГЊ
     void SetNode(int key_val, int seted_node_val)
     {  Node *node = head                                        ;
         while (node != NULL) 
@@ -132,7 +132,7 @@ class LinkedList                        //задаёт связанный список узлов
             node = node->next                                   ;
         }
     }
-    //---------------------------- СУММАТОР ЛИСТОВ
+    //---------------------------- Г‘Г“ГЊГЊГЂГ’ГЋГђ Г‹Г€Г‘Г’ГЋГ‚
     LinkedList* SummLists(LinkedList* first, LinkedList* second)
     {   LinkedList* NewList = new LinkedList                    ;
         int length1 = first->GetLength()                        ;
@@ -150,14 +150,14 @@ class LinkedList                        //задаёт связанный список узлов
            NewList->print()                                     ;
            return(NewList)                                      ;
         }
-        else Form1->Memo->Text  = "Неравная длина списков"      ;
+        else Form1->Memo->Text  = "ГЌГҐГ°Г ГўГ­Г Гї Г¤Г«ГЁГ­Г  Г±ГЇГЁГ±ГЄГ®Гў"      ;
         return(NewList)                                         ;
     }
 
-    //----------------------------- Массив данных списка(для теста)
+    //----------------------------- ГЊГ Г±Г±ГЁГў Г¤Г Г­Г­Г»Гµ Г±ГЇГЁГ±ГЄГ (Г¤Г«Гї ГІГҐГ±ГІГ )
     int** Array(LinkedList* list)
     {   int i = 0                                               ;
-        int Arraylength = list->GetLength()                     ;//расчет строк массива
+        int Arraylength = list->GetLength()                     ;//Г°Г Г±Г·ГҐГІ Г±ГІГ°Г®ГЄ Г¬Г Г±Г±ГЁГўГ 
         int *p_darr = new int[Arraylength]                      ;
         int **DataArray                                         ;
         DataArray = new int*[Arraylength]                       ;
@@ -167,26 +167,25 @@ class LinkedList                        //задаёт связанный список узлов
 
         Node *node = list->head                                 ;
         while (node != NULL)
-        {   DataArray[i][0] =  node->value                      ;//величина
-            DataArray[i][1] = (int) node                        ;//адрес элемента
-            DataArray[i][2] = (int) node->next                  ;//адрес след.элем.
+        {   DataArray[i][0] =  node->value                      ;//ГўГҐГ«ГЁГ·ГЁГ­Г 
+            DataArray[i][1] = (int) node                        ;//Г Г¤Г°ГҐГ± ГЅГ«ГҐГ¬ГҐГ­ГІГ 
+            DataArray[i][2] = (int) node->next                  ;//Г Г¤Г°ГҐГ± Г±Г«ГҐГ¤.ГЅГ«ГҐГ¬.
             i++;
             node = node->next                                   ;
         }
         return(DataArray)                                       ;
     }
-    //---------------------------- Сравнение массивов(для теста)
+    //---------------------------- Г‘Г°Г ГўГ­ГҐГ­ГЁГҐ Г¬Г Г±Г±ГЁГўГ®Гў(Г¤Г«Гї ГІГҐГ±ГІГ )
     int compare_arrays(int** mass1, int** mass2)                      
     {   int exit                                                      ;
         for (int i = 0; i<100; i++)
-        {   if (mass1[i][0] != mass2[i][0])                return(1)  ;//величина
-            if (mass1[i][2] == 0 && mass2[i][2] == 0)      return(0)  ;//адрес
+        {   if (mass1[i][0] != mass2[i][0])                return(1)  ;//ГўГҐГ«ГЁГ·ГЁГ­Г 
+            if (mass1[i][2] == 0 && mass2[i][2] == 0)      return(0)  ;//Г Г¤Г°ГҐГ±
             else if (mass1[i][2] == 0 || mass2[i][2] == 0) return(1)  ;
         }
         return(1)                                                      ;
     }
-
-    //----------------------------- СОЗДАТЬ ЛИСТ (перегруз функции)(для теста)
+    //----------------------------- Г‘ГЋГ‡Г„ГЂГ’Гњ Г‹Г€Г‘Г’ (ГЇГҐГ°ГҐГЈГ°ГіГ§ ГґГіГ­ГЄГ¶ГЁГЁ)(Г¤Г«Гї ГІГҐГ±ГІГ )
     void CreateList(int a1)
     {   empty();
         add_in_tail(new Node(a1))                               ;
@@ -212,7 +211,7 @@ class LinkedList                        //задаёт связанный список узлов
         add_in_tail(new Node(a3))                               ;
         add_in_tail(new Node(a4))                               ;
     }
-    //------------------------ ТЕСТ --------------------------------
+    //------------------------ Test --------------------------------
     void Test ()
     {   int i = 0                                               ;
         LinkedList* test_list1 = new LinkedList                 ;
@@ -221,9 +220,9 @@ class LinkedList                        //задаёт связанный список узлов
         int** Array2                                            ;
 
         // del_val(int val)--------------------------------------
-        test_list1 -> CreateList(1, 2, 3)                       ;//лист перед применением функции
-        test_list2 -> CreateList(2, 3)                          ;//каким должен быть результат после
-        i += TestSolve (test_list1, test_list2, 0, 1)           ;//лист1,лист2,функция,val функции
+        test_list1 -> CreateList(1, 2, 3)                       ;//Г«ГЁГ±ГІ ГЇГҐГ°ГҐГ¤ ГЇГ°ГЁГ¬ГҐГ­ГҐГ­ГЁГҐГ¬ ГґГіГ­ГЄГ¶ГЁГЁ
+        test_list2 -> CreateList(2, 3)                          ;//ГЄГ ГЄГЁГ¬ Г¤Г®Г«Г¦ГҐГ­ ГЎГ»ГІГј Г°ГҐГ§ГіГ«ГјГІГ ГІ ГЇГ®Г±Г«ГҐ
+        i += TestSolve (test_list1, test_list2, 0, 1)           ;//Г«ГЁГ±ГІ1,Г«ГЁГ±ГІ2,ГґГіГ­ГЄГ¶ГЁГї,val ГґГіГ­ГЄГ¶ГЁГЁ
 
         test_list1 -> CreateList(1, 2, 3)                       ;
         test_list2 -> CreateList(1, 3)                          ;
@@ -298,16 +297,16 @@ class LinkedList                        //задаёт связанный список узлов
         test_list1 -> CreateList(4, 2, 5, 1)                          ;
         test_list2 -> CreateList(4, 6)                                ;
         SummLists(test_list1 , test_list2)                            ;
-        if (Form1->Memo->Text  != "Неравная длина списков") i++       ;
+        if (Form1->Memo->Text  != "ГЌГҐГ°Г ГўГ­Г Гї Г¤Г«ГЁГ­Г  Г±ГЇГЁГ±ГЄГ®Гў") i++       ;
 
-        if (i !=0 ) Form1->Memo->Text  = "Тест не пройден"            ;
-        else        Form1->Memo->Text  = "Тест завершен успешно"      ;
+        if (i !=0 ) Form1->Memo->Text  = "Г’ГҐГ±ГІ Г­ГҐ ГЇГ°Г®Г©Г¤ГҐГ­"            ;
+        else        Form1->Memo->Text  = "Г’ГҐГ±ГІ Г§Г ГўГҐГ°ГёГҐГ­ ГіГ±ГЇГҐГёГ­Г®"      ;
 
         delete test_list1;
         delete test_list2;
     }
 
-   //------------ ТЕСТ (сравнение результата и ответа) ----------
+   //------------ Г’Г…Г‘Г’ (Г±Г°Г ГўГ­ГҐГ­ГЁГҐ Г°ГҐГ§ГіГ«ГјГІГ ГІГ  ГЁ Г®ГІГўГҐГІГ ) ----------
    int TestSolve (LinkedList* test_list1, LinkedList* test_list2,int fNumFunc, int val)
     {
         int i = 0                                       ;
@@ -323,10 +322,10 @@ class LinkedList                        //задаёт связанный список узлов
                 { &LinkedList::del_val                  ,  //0
                   &LinkedList::del_val_all  }           ;  //1
 
-        (test_list1->*ListTableFunc[fNumFunc])(val)     ;//проверяемая функция
-        Array1 = Array(test_list1)                      ;//определение первого массива
-        Array2 = Array(test_list2)                      ;//второй массив
-        i = compare_arrays(Array1,Array2)               ;//сравнение и результат
+        (test_list1->*ListTableFunc[fNumFunc])(val)     ;//ГЇГ°Г®ГўГҐГ°ГїГҐГ¬Г Гї ГґГіГ­ГЄГ¶ГЁГї
+        Array1 = Array(test_list1)                      ;//Г®ГЇГ°ГҐГ¤ГҐГ«ГҐГ­ГЁГҐ ГЇГҐГ°ГўГ®ГЈГ® Г¬Г Г±Г±ГЁГўГ 
+        Array2 = Array(test_list2)                      ;//ГўГІГ®Г°Г®Г© Г¬Г Г±Г±ГЁГў
+        i = compare_arrays(Array1,Array2)               ;//Г±Г°Г ГўГ­ГҐГ­ГЁГҐ ГЁ Г°ГҐГ§ГіГ«ГјГІГ ГІ
         return(i)                                       ;
     }
 
@@ -345,18 +344,9 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 //===========================================================================
 
 void __fastcall TForm1::BtnRunClick(TObject *Sender)
-{
-        //-- СБРОС СПИСКА ДО НОМИНАЛЬНЫХ ЗНАЧЕНИЙ --
-        Node *n1 = new Node(12)                 ;
-        Node *n2 = new Node(44)                 ;
-        n1->next = &(*n2)                       ;
-
-        list->empty()                           ;
-        list->add_in_tail(n1)                   ;
-        list->add_in_tail(n2)                   ;
-        list->add_in_tail(new Node(128))        ;
-        list->add_in_tail(new Node(55))         ;
-        Form1->Memo->Text  = "Список создан"    ;
+{        //-- creation of standart list --   
+        test_list1 -> CreateList(16, 32, 128, 256);
+        Form1->Memo->Text  = "List created";
 }
 //---------------------------------------------------------------------------
 
