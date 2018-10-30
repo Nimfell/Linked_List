@@ -347,16 +347,8 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 
 void __fastcall TForm1::BtnRunClick(TObject *Sender)
 {
-        //-- СБРОС СПИСКА ДО НОМИНАЛЬНЫХ ЗНАЧЕНИЙ --
-        Node *n1 = new Node(12)                 ;
-        Node *n2 = new Node(44)                 ;
-        n1->next = &(*n2)                       ;
-
-        list->empty()                           ;
-        list->add_in_tail(n1)                   ;
-        list->add_in_tail(n2)                   ;
-        list->add_in_tail(new Node(128))        ;
-        list->add_in_tail(new Node(55))         ;
+        //-- СБРОС СПИСКА ДО НОМИНАЛЬНЫХ ЗНАЧЕНИЙ --        
+        list -> CreateList(16, 32, 128, 256)    ;       
         Form1->Memo->Text  = "Список создан"    ;
 }
 //---------------------------------------------------------------------------
