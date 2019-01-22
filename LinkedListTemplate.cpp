@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-class Node                                                      
-{  
+class Node
+{
   public:
     int value;
     Node* next;
@@ -49,13 +49,20 @@ class LinkedList
           while (node != NULL)
           {
                if (node->value == val)
-               {   prevnode->next = node->next;
-                    if (node == head) head = node->next;
-                    if (node == tail) tail = prevnode;
+               {    prevnode->next = node->next;
+                    if (node == head && node == tail)
+                    {
+                         head = NULL;
+                         tail = NULL;
+                         return true;
+                    }
+                    if (node == head)
+                         head = node->next;
+                    if (node == tail)
+                         tail = prevnode;
                     return true;
                }
-               if (node->value != val)
-                    prevnode = node;
+               prevnode = node;
                node = node->next;
           }
           return false;
@@ -113,5 +120,5 @@ class LinkedList
        nodeAfter->next = nodeToInsert;
        if (nodeAfter == tail)
           tail = nodeToInsert;
-    } 
+    }
 };
